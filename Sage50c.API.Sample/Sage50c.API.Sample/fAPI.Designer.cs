@@ -300,10 +300,11 @@ namespace Sage50c.API.Sample {
             this.tabSystemUsers = new System.Windows.Forms.TabPage();
             this.systemUsers1 = new Sage50c.API.Sample.SystemUsers();
             this.tabSystemSettings = new System.Windows.Forms.TabPage();
+            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
             this.LerPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.FinalizarPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.GuardarPreparacao = new System.Windows.Forms.ToolTip(this.components);
-            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
+            this.optPrintOptions2 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCSharp)).BeginInit();
             this.panel5.SuspendLayout();
@@ -1889,6 +1890,7 @@ namespace Sage50c.API.Sample {
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.optPrintOptions2);
             this.groupBox1.Controls.Add(this.optPrintOptions1);
             this.groupBox1.Controls.Add(this.optPrintOptions0);
             this.groupBox1.Controls.Add(this.chkPrintPreview);
@@ -1918,7 +1920,6 @@ namespace Sage50c.API.Sample {
             this.optPrintOptions0.Name = "optPrintOptions0";
             this.optPrintOptions0.Size = new System.Drawing.Size(71, 19);
             this.optPrintOptions0.TabIndex = 343;
-            this.optPrintOptions0.TabStop = true;
             this.optPrintOptions0.Text = "Imprimir";
             this.optPrintOptions0.UseVisualStyleBackColor = true;
             // 
@@ -3942,6 +3943,16 @@ namespace Sage50c.API.Sample {
             this.systemSettingsUC1.Size = new System.Drawing.Size(943, 481);
             this.systemSettingsUC1.TabIndex = 0;
             // 
+            // optPrintOptions2
+            // 
+            this.optPrintOptions2.AutoSize = true;
+            this.optPrintOptions2.Location = new System.Drawing.Point(20, 76);
+            this.optPrintOptions2.Name = "optPrintOptions2";
+            this.optPrintOptions2.Size = new System.Drawing.Size(96, 19);
+            this.optPrintOptions2.TabIndex = 345;
+            this.optPrintOptions2.Text = "Não imprimir";
+            this.optPrintOptions2.UseVisualStyleBackColor = true;
+            // 
             // fApi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -4302,6 +4313,7 @@ namespace Sage50c.API.Sample {
         private SystemUsers systemUsers1;
         private TabPage tabSystemSettings;
         private SystemSettingsUC systemSettingsUC1;
+        private RadioButton optPrintOptions2;
     }
 }
 
