@@ -1492,7 +1492,9 @@ namespace Sage50c.API.Sample {
                 _itemTransactionController.Save(suspended);
                 transactionID = _itemTransactionController.Transaction.TransactionID;
             }
-            TransactionPrintWithConfig(_itemTransactionController.Transaction.TransSerial, _itemTransactionController.Transaction.TransDocument, _itemTransactionController.Transaction.TransDocNumber);
+
+            if (!optPrintOptions2.Checked)
+                TransactionPrintWithConfig(_itemTransactionController.Transaction.TransSerial, _itemTransactionController.Transaction.TransDocument, _itemTransactionController.Transaction.TransDocNumber);
 
             if (APIEngine.CoreGlobals.MsgBoxFrontOffice("Clean UI?", VBA.VbMsgBoxStyle.vbYesNo, Application.ProductName) == VBA.VbMsgBoxResult.vbYes)
                 TransactionClearUI();
