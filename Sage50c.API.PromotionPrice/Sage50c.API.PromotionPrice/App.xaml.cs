@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace Sage50c.API.PromotionPrice {
@@ -10,5 +12,63 @@ namespace Sage50c.API.PromotionPrice {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+
+        #region "Constants"
+
+        // These directores are the default directories where the Sage50c dlls are located.
+        private const string _sageDirInterops = "Program Files (x86)\\Common Files\\sage\\2070\\50c2022\\Interops\\";
+        private const string _sageDirExtraOnline = "Program Files (x86)\\Common Files\\sage\\2070\\50c2022\\Extra Online\\";
+
+        #endregion
+
+        public App()
+        {
+            ListOfDirectories.Add($@"{BaseDirectoryRoot}{_sageDirInterops}");
+            ListOfDirectories.Add($@"{BaseDirectoryRoot}{_sageDirExtraOnline}");
+
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        #region "AssemblyResolve"
+
+        private static string BaseDirectoryRoot { get; set; } = Path.GetPathRoot(AppDomain.CurrentDomain.BaseDirectory);
+        private static List<string> ListOfDirectories = new List<string>();
+
+        /// <summary>
+        /// Load the assembly from the specified path.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The arguments of the event.</param>
+        /// <returns>The loaded assembly.</returns>
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            try
+            {
+                // Get the name of the requested assembly.
+                const string extentionType = ".dll";
+                var assemblyName = new AssemblyName(args.Name).Name;
+
+                foreach (var directory in ListOfDirectories)
+                {
+                    // Combine the folder path with the assembly name and ".dll" extension.
+                    var assemblyPath = Path.Combine(directory, assemblyName + extentionType);
+
+                    if (File.Exists(assemblyPath))
+                    {
+                        // Load the assembly from the specified path.
+                        return Assembly.LoadFrom(assemblyPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // This exception will be thrown if the assembly is not found in the external DLLs folder.
+            }
+
+            // Return null if the assembly is not found in the external DLLs folder.
+            return null;
+        }
+
+        #endregion
     }
 }
