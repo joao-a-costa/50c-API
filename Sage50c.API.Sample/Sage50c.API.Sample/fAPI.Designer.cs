@@ -142,6 +142,7 @@ namespace Sage50c.API.Sample {
             this.btnTransSavePrep = new System.Windows.Forms.Button();
             this.btnTransGetPrep = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.optPrintOptions2 = new System.Windows.Forms.RadioButton();
             this.optPrintOptions1 = new System.Windows.Forms.RadioButton();
             this.optPrintOptions0 = new System.Windows.Forms.RadioButton();
             this.chkPrintPreview = new System.Windows.Forms.CheckBox();
@@ -298,13 +299,14 @@ namespace Sage50c.API.Sample {
             this.lblExportTo0 = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.tabSystemUsers = new System.Windows.Forms.TabPage();
-            this.systemUsers1 = new Sage50c.API.Sample.SystemUsers();
             this.tabSystemSettings = new System.Windows.Forms.TabPage();
-            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
+            this.tpDataManager = new System.Windows.Forms.TabPage();
             this.LerPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.FinalizarPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.GuardarPreparacao = new System.Windows.Forms.ToolTip(this.components);
-            this.optPrintOptions2 = new System.Windows.Forms.RadioButton();
+            this.systemUsers1 = new Sage50c.API.Sample.SystemUsers();
+            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
+            this.dataManagerUC1 = new Sage50c.API.Sample.DataManagerUC();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCSharp)).BeginInit();
             this.panel5.SuspendLayout();
@@ -348,6 +350,7 @@ namespace Sage50c.API.Sample {
             this.gbGlobal.SuspendLayout();
             this.tabSystemUsers.SuspendLayout();
             this.tabSystemSettings.SuspendLayout();
+            this.tpDataManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -1902,6 +1905,16 @@ namespace Sage50c.API.Sample {
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Impressão";
             // 
+            // optPrintOptions2
+            // 
+            this.optPrintOptions2.AutoSize = true;
+            this.optPrintOptions2.Location = new System.Drawing.Point(20, 76);
+            this.optPrintOptions2.Name = "optPrintOptions2";
+            this.optPrintOptions2.Size = new System.Drawing.Size(96, 19);
+            this.optPrintOptions2.TabIndex = 345;
+            this.optPrintOptions2.Text = "Não imprimir";
+            this.optPrintOptions2.UseVisualStyleBackColor = true;
+            // 
             // optPrintOptions1
             // 
             this.optPrintOptions1.AutoSize = true;
@@ -1920,6 +1933,7 @@ namespace Sage50c.API.Sample {
             this.optPrintOptions0.Name = "optPrintOptions0";
             this.optPrintOptions0.Size = new System.Drawing.Size(71, 19);
             this.optPrintOptions0.TabIndex = 343;
+            this.optPrintOptions0.TabStop = true;
             this.optPrintOptions0.Text = "Imprimir";
             this.optPrintOptions0.UseVisualStyleBackColor = true;
             // 
@@ -2142,7 +2156,7 @@ namespace Sage50c.API.Sample {
             this.pnlTransModuleSizeColor.Enabled = false;
             this.pnlTransModuleSizeColor.Location = new System.Drawing.Point(0, 31);
             this.pnlTransModuleSizeColor.Name = "pnlTransModuleSizeColor";
-            this.pnlTransModuleSizeColor.Size = new System.Drawing.Size(555, 142);
+            this.pnlTransModuleSizeColor.Size = new System.Drawing.Size(555, 144);
             this.pnlTransModuleSizeColor.TabIndex = 360;
             // 
             // btnTransClearSize1
@@ -3660,6 +3674,7 @@ namespace Sage50c.API.Sample {
             this.tabEntities.Controls.Add(this.tabSAFT);
             this.tabEntities.Controls.Add(this.tabSystemUsers);
             this.tabEntities.Controls.Add(this.tabSystemSettings);
+            this.tabEntities.Controls.Add(this.tpDataManager);
             this.tabEntities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabEntities.Enabled = false;
             this.tabEntities.Location = new System.Drawing.Point(0, 106);
@@ -3915,15 +3930,6 @@ namespace Sage50c.API.Sample {
             this.tabSystemUsers.Text = "System Users";
             this.tabSystemUsers.UseVisualStyleBackColor = true;
             // 
-            // systemUsers1
-            // 
-            this.systemUsers1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.systemUsers1.Location = new System.Drawing.Point(0, 0);
-            this.systemUsers1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.systemUsers1.Name = "systemUsers1";
-            this.systemUsers1.Size = new System.Drawing.Size(943, 481);
-            this.systemUsers1.TabIndex = 0;
-            // 
             // tabSystemSettings
             // 
             this.tabSystemSettings.Controls.Add(this.systemSettingsUC1);
@@ -3934,24 +3940,42 @@ namespace Sage50c.API.Sample {
             this.tabSystemSettings.Text = "System Settings";
             this.tabSystemSettings.UseVisualStyleBackColor = true;
             // 
+            // tpDataManager
+            // 
+            this.tpDataManager.Controls.Add(this.dataManagerUC1);
+            this.tpDataManager.Location = new System.Drawing.Point(4, 24);
+            this.tpDataManager.Name = "tpDataManager";
+            this.tpDataManager.Size = new System.Drawing.Size(943, 481);
+            this.tpDataManager.TabIndex = 9;
+            this.tpDataManager.Text = "Data Manager";
+            this.tpDataManager.UseVisualStyleBackColor = true;
+            // 
+            // systemUsers1
+            // 
+            this.systemUsers1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.systemUsers1.Location = new System.Drawing.Point(0, 0);
+            this.systemUsers1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.systemUsers1.Name = "systemUsers1";
+            this.systemUsers1.Size = new System.Drawing.Size(943, 483);
+            this.systemUsers1.TabIndex = 0;
+            // 
             // systemSettingsUC1
             // 
             this.systemSettingsUC1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.systemSettingsUC1.Location = new System.Drawing.Point(0, 0);
             this.systemSettingsUC1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.systemSettingsUC1.Name = "systemSettingsUC1";
-            this.systemSettingsUC1.Size = new System.Drawing.Size(943, 481);
+            this.systemSettingsUC1.Size = new System.Drawing.Size(943, 483);
             this.systemSettingsUC1.TabIndex = 0;
             // 
-            // optPrintOptions2
+            // dataManagerUC1
             // 
-            this.optPrintOptions2.AutoSize = true;
-            this.optPrintOptions2.Location = new System.Drawing.Point(20, 76);
-            this.optPrintOptions2.Name = "optPrintOptions2";
-            this.optPrintOptions2.Size = new System.Drawing.Size(96, 19);
-            this.optPrintOptions2.TabIndex = 345;
-            this.optPrintOptions2.Text = "Não imprimir";
-            this.optPrintOptions2.UseVisualStyleBackColor = true;
+            this.dataManagerUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataManagerUC1.Location = new System.Drawing.Point(0, 0);
+            this.dataManagerUC1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dataManagerUC1.Name = "dataManagerUC1";
+            this.dataManagerUC1.Size = new System.Drawing.Size(943, 481);
+            this.dataManagerUC1.TabIndex = 0;
             // 
             // fApi
             // 
@@ -4031,6 +4055,7 @@ namespace Sage50c.API.Sample {
             this.gbGlobal.PerformLayout();
             this.tabSystemUsers.ResumeLayout(false);
             this.tabSystemSettings.ResumeLayout(false);
+            this.tpDataManager.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -4314,6 +4339,8 @@ namespace Sage50c.API.Sample {
         private TabPage tabSystemSettings;
         private SystemSettingsUC systemSettingsUC1;
         private RadioButton optPrintOptions2;
+        private TabPage tpDataManager;
+        private DataManagerUC dataManagerUC1;
     }
 }
 

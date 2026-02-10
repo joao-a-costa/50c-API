@@ -100,6 +100,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </Reference>
+    <Reference Include="combit.ListLabel28, Version=28.0.8322.28237, Culture=neutral, PublicKeyToken=a7a30592cb4a94be, processorArchitecture=MSIL" />
     <Reference Include="DAO">
       <HintPath>C:\Program Files (x86)\Common Files\sage\2070\50c2022\Interops\DAO.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -247,6 +248,9 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -355,6 +359,12 @@
     </Compile>
     <Compile Include="Helpers\QuickSearchHelper.cs" />
     <Compile Include="Helpers\StockHelper.cs" />
+    <Compile Include="DataManagerUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataManagerUC.Designer.cs">
+      <DependentUpon>DataManagerUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="SystemSettingsUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -391,6 +401,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataManagerUC.resx">
+      <DependentUpon>DataManagerUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SystemSettingsUC.resx">
       <DependentUpon>SystemSettingsUC.cs</DependentUpon>
