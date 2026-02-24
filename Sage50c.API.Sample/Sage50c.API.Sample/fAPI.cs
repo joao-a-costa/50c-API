@@ -977,7 +977,7 @@ namespace Sage50c.API.Sample {
             if (rbTransBuySell.Checked)
             {
                 _itemTransactionController.CreateViaJSON(json);
-                _itemTransactionController.Save(false);
+                _itemTransactionController.Save(false, checkIfDocumentExists: false);
                 transactionID = _itemTransactionController.Transaction.TransactionID;
             }
             else

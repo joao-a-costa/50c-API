@@ -114,9 +114,9 @@ namespace Sage50c.API.Sample.Controllers {
         /// <summary>
         /// Save (insert or update) transaction
         /// </summary>
-        public bool Save(bool Suspended) {
+        public bool Save(bool Suspended, bool checkIfDocumentExists = true) {
             bool result = false;
-            if (Validate(Suspended)) {
+            if (Validate(Suspended, checkIfDocumentExists)) {
                 SetUserPermissions();
 
                 _bsoItemTransaction.EnsureOpenTill(_bsoItemTransaction.Transaction.Till.TillID);
@@ -281,7 +281,7 @@ namespace Sage50c.API.Sample.Controllers {
         /// <summary>
         /// Validate Transaction 
         /// </summary>
-        public bool Validate(bool Suspended) {
+        public bool Validate(bool Suspended, bool checkIfDocumentExists = true) {
 
             StringBuilder error = new StringBuilder();
 
@@ -296,7 +296,7 @@ namespace Sage50c.API.Sample.Controllers {
                     throw new Exception($"O documento {_bsoItemTransaction.Transaction.TransDocument} {_bsoItemTransaction.Transaction.TransSerial}/{_bsoItemTransaction.Transaction.TransDocNumber} não existe para ser alterado. Deve criar um novo.");
                 }
             }
-            else if (editState == EditState.New && dsoCache.ItemTransactionProvider.ItemTransactionExists(_bsoItemTransaction.Transaction.TransSerial, _bsoItemTransaction.Transaction.TransDocument, _bsoItemTransaction.Transaction.TransDocNumber)) {
+            else if (checkIfDocumentExists && editState == EditState.New && dsoCache.ItemTransactionProvider.ItemTransactionExists(_bsoItemTransaction.Transaction.TransSerial, _bsoItemTransaction.Transaction.TransDocument, _bsoItemTransaction.Transaction.TransDocNumber)) {
                 throw new Exception($"O documento {_bsoItemTransaction.Transaction.TransDocument} {_bsoItemTransaction.Transaction.TransSerial}/{_bsoItemTransaction.Transaction.TransDocNumber} já existe. Deve criar um novo.");
             }
 
@@ -327,7 +327,7 @@ namespace Sage50c.API.Sample.Controllers {
                     error.AppendLine("O número de Documento não se encontra preenchido");
                 }
 
-                if (string.IsNullOrEmpty(_bsoItemTransaction.Transaction.BaseCurrency.CurrencyID)) {
+                if (string.IsNullOrEmpty(_bsoItemTransaction.Transaction.BaseCurrency?.CurrencyID)) {
                     _bsoItemTransaction.Transaction.BaseCurrency = systemSettings.BaseCurrency;
                 }
                 else {
@@ -353,8 +353,15 @@ namespace Sage50c.API.Sample.Controllers {
                 //        error.AppendLine($"O pagamento não existe");
                 //    }
                 //}
+
+                if (_bsoItemTransaction.Transaction.Till.TillID == null)
+                    _bsoItemTransaction.Transaction.Till.TillID = "000";
+
                 if (_bsoItemTransaction.Transaction.Payment == null) {
-                    error.AppendLine($"O pagamento não existe");
+                    _bsoItemTransaction.Transaction.Payment = dsoCache.PaymentProvider.GetPayment(dsoCache.PaymentProvider.GetFirstID());
+
+                    if (_bsoItemTransaction.Transaction.Payment == null)
+                        error.AppendLine($"O pagamento não existe");
                 }
                 else if (_bsoItemTransaction.Transaction.Payment.PaymentID == 0) {
                     error.AppendLine($"O pagamento é obrigatório");
@@ -376,7 +383,7 @@ namespace Sage50c.API.Sample.Controllers {
                         error.AppendLine($"O método de pagamento não existe");
                     }
                 }
-                if (_bsoItemTransaction.Transaction.Salesman.SalesmanID == 0) {
+                if (_bsoItemTransaction.Transaction.Salesman?.SalesmanID == null || _bsoItemTransaction.Transaction.Salesman?.SalesmanID == 0) {
                     var salesman = dsoCache.SalesmanProvider.GetFirstSalesmanID();
                     _bsoItemTransaction.Transaction.Salesman = dsoCache.SalesmanProvider.GetSalesman(salesman);
                 }
