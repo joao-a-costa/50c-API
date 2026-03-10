@@ -1314,6 +1314,16 @@ namespace Sage50c.API.Sample {
                 _itemTransactionController.Transaction.TransactionTaxIncluded = chkTransTaxIncluded.Checked;
                 _itemTransactionController.SetUserPermissions();
 
+                #region "RequestTransactionAtDocCode"
+
+                _itemTransactionController.ShowRequestTransactionAtDocCode = false;
+
+                if (CbRequestTransactionAtDocCode.Checked)
+                {
+                    _itemTransactionController.RequestTransactionAtDocCode();
+                }
+
+                #endregion
             }
         }
 

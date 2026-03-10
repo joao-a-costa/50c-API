@@ -23,6 +23,11 @@ namespace Sage50c.API.Sample.Controllers {
 
         private Document _document = null;
 
+        public string WsATUserID { get; set; }
+        public string WsATUserCode { get; set; }
+        public string WsATPassword { get; set; }
+        public bool ShowRequestTransactionAtDocCode { get; set; } = false;
+
 
         public ItemTransactionController() {
             _bsoItemTransaction = new BSOItemTransaction();
@@ -275,7 +280,8 @@ namespace Sage50c.API.Sample.Controllers {
                 log.AppendLine($"Error: {ex.Message}");
             }
 
-            MessageBox.Show(log.ToString(), "Transaction Submission Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (ShowRequestTransactionAtDocCode)
+                MessageBox.Show(log.ToString(), "Transaction Submission Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -598,5 +604,123 @@ namespace Sage50c.API.Sample.Controllers {
             _bsoItemTransaction.Transaction.TenderLineItem.Add(tenderLine);
         }
 
+        public void RequestTransactionAtDocCode()
+        {
+            //_bsoItemTransaction.RequestTransactionAtDocCode -= BSOIT_RequestTransactionAtDocCode;
+            //_bsoItemTransaction.RequestTransactionAtDocCode += BSOIT_RequestTransactionAtDocCode;
+            WsATUserID = _bsoItemTransaction.WebServiceShipmentConfig.WsATUserID;
+            WsATUserCode = _bsoItemTransaction.WebServiceShipmentConfig.WsATUserCode;
+            WsATPassword = _bsoItemTransaction.WebServiceShipmentConfig.WsATPassword;
+            ShowRequestTransactionAtDocCode = true;
+        }
+
+        private void BSOIT_RequestTransactionAtDocCode(S50cBO22.ItemTransaction Transaction, ref string DocCode, ref S50cBO22.TransmissionStatusEnum TransmissionStatus)
+        {
+            AtSubmissionResponse response = null;
+            AtShipmentSubmission atShipmentSubmission = null;
+            var logMessage = string.Empty;
+
+            try
+            {
+                logMessage = $"{nameof(BSOIT_RequestTransactionAtDocCode)}: Starting transaction submission... {Environment.NewLine}";
+                //SmartApp.Logger.Info($"{nameof(BSOIT_RequestTransactionAtDocCode)}: Starting transaction submission...");
+
+                atShipmentSubmission = new AtShipmentSubmission();
+
+                logMessage += $"Setting AT WebService credentials. WsATUserID: {WsATUserID}. WsATUserCode: {WsATUserCode}. WsATPassword: *********";
+                //SmartApp.Logger.Debug($"Setting AT WebService credentials. WsATUserID: {WsATUserID}. WsATUserCode: {WsATUserCode}. WsATPassword: *********");
+                atShipmentSubmission.SetAtWebServiceCredencials(WsATUserID, WsATUserCode, WsATPassword);
+
+                if (Transaction != null)
+                {
+                    logMessage += $"Submitting transaction ID: {Transaction.TransactionID}";
+                    //SmartApp.Logger.Info($"Submitting transaction ID: {Transaction.TransactionID}");
+
+                    response = atShipmentSubmission.SubmitTransaction(Transaction);
+
+                    if (response != null)
+                    {
+                        logMessage += $"Received response for transaction ID: {Transaction.TransactionID}, ReturnCode: {response.ReturnCode}, Message: {response.ReturnMessage}, AtDocCodeID: {response.AtDocCodeID}";
+                        //SmartApp.Logger.Info($"Received response for transaction ID: {Transaction.TransactionID}, ReturnCode: {response.ReturnCode}, Message: {response.ReturnMessage}, AtDocCodeID: {response.AtDocCodeID}");
+
+                        DocCode = response.AtDocCodeID;
+
+                        if (response.Success)
+                        {
+                            logMessage += "Transaction marked as successful.";
+                            //SmartApp.Logger.Debug("Transaction marked as successful.");
+
+                            if (response.ReturnCode == -1000)
+                            {
+                                TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusNone;
+                                logMessage += "ReturnCode -1000: Setting TransmissionStatus to None.";
+                                //SmartApp.Logger.Warn("ReturnCode -1000: Setting TransmissionStatus to None.");
+                            }
+                            else if (response.ReturnCode == -100)
+                            {
+                                DocCode = "OMISSO";
+                                TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusWebserviceSubmitedToAT;
+                                logMessage += "ReturnCode -100: Setting DocCode to OMISSO and TransmissionStatus to WebserviceSubmitedToAT.";
+                                //SmartApp.Logger.Warn("ReturnCode -100: Setting DocCode to OMISSO.");
+                            }
+                            else
+                            {
+                                TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusWebserviceSubmitedToAT;
+                                logMessage += "Transaction successfully submitted to AT. Setting TransmissionStatus to WebserviceSubmitedToAT.";
+                                //SmartApp.Logger.Info("Submission successful to AT.");
+                            }
+                        }
+                        else if (response.ReturnCode == -100)
+                        {
+                            DocCode = "OMISSO";
+                            TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusWebserviceSubmitedToAT;
+                            logMessage += "Response not successful and ReturnCode is -100: Setting DocCode to OMISSO and TransmissionStatus to WebserviceSubmitedToAT.";
+                            //SmartApp.Logger.Warn("Response not successful but ReturnCode is -100: DocCode set to OMISSO.");
+                        }
+                        else if (response.Responded)
+                        {
+                            TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusNone;
+                            logMessage += "Response received but not successful: Setting TransmissionStatus to None.";
+                            //SmartApp.Logger.Warn("Response received but not successful: Setting TransmissionStatus to None.");
+                        }
+                        else if (response.Uploaded)
+                        {
+                            TransmissionStatus = S50cBO22.TransmissionStatusEnum.TransmissionStatusWebserviceSubmitedToSage;
+                            logMessage += "Response indicates upload to Sage: Setting TransmissionStatus to WebserviceSubmitedToSage.";
+                            //SmartApp.Logger.Info("Response indicates upload to Sage.");
+                        }
+
+                        //SmartApp.Logger.Debug("Updating transaction AT report...");
+                        //SmartApp.Engine.DSOCache.ItemTransactionProvider.UpdateTransactionATReport(
+                        //    Transaction.TransactionID,
+                        //    DateTime.Now,
+                        //    response.ReturnCode,
+                        //    TaxAuthorityReportTypes.ReportByWebService,
+                        //    response.ReturnMessage);
+
+                        if (!string.IsNullOrEmpty(response.AtDocCodeID))
+                        {
+                            logMessage += $"Updating transaction with AT DocCode ID: {response.AtDocCodeID}";
+                        }
+                        //UpdateATDocCodeId(Transaction.TransDocument, Transaction.TransSerial,
+                        //    Transaction.TransDocNumber, response.AtDocCodeID);
+                    }
+                    else
+                    {
+                        //SmartApp.Logger.Warn("No response received from AT webservice.");
+                    }
+                }
+                else
+                {
+                    //SmartApp.Logger.Warn("Transaction is null or credentials check failed.");
+                }
+            }
+            catch (Exception e)
+            {
+                logMessage += $"Exception occurred: {e.Message}. InnerException: {(e.InnerException != null ? e.InnerException.Message : "None")}. StackTrace: {e.StackTrace}";
+            }
+
+            MessageBox.Show(logMessage, "AT Submission Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

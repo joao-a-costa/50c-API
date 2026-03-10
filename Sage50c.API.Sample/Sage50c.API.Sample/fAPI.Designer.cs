@@ -95,6 +95,7 @@ namespace Sage50c.API.Sample {
             this.Label30 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabBuySaleTransaction = new System.Windows.Forms.TabPage();
+            this.CbRequestTransactionAtDocCode = new System.Windows.Forms.CheckBox();
             this.label49 = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
             this.txtQrCode = new System.Windows.Forms.TextBox();
@@ -299,14 +300,14 @@ namespace Sage50c.API.Sample {
             this.lblExportTo0 = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.tabSystemUsers = new System.Windows.Forms.TabPage();
+            this.systemUsers1 = new Sage50c.API.Sample.SystemUsers();
             this.tabSystemSettings = new System.Windows.Forms.TabPage();
+            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
             this.tpDataManager = new System.Windows.Forms.TabPage();
+            this.dataManagerUC1 = new Sage50c.API.Sample.DataManagerUC();
             this.LerPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.FinalizarPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.GuardarPreparacao = new System.Windows.Forms.ToolTip(this.components);
-            this.systemUsers1 = new Sage50c.API.Sample.SystemUsers();
-            this.systemSettingsUC1 = new Sage50c.API.Sample.SystemSettingsUC();
-            this.dataManagerUC1 = new Sage50c.API.Sample.DataManagerUC();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCSharp)).BeginInit();
             this.panel5.SuspendLayout();
@@ -1256,6 +1257,7 @@ namespace Sage50c.API.Sample {
             // tabBuySaleTransaction
             // 
             this.tabBuySaleTransaction.BackColor = System.Drawing.Color.White;
+            this.tabBuySaleTransaction.Controls.Add(this.CbRequestTransactionAtDocCode);
             this.tabBuySaleTransaction.Controls.Add(this.label49);
             this.tabBuySaleTransaction.Controls.Add(this.label51);
             this.tabBuySaleTransaction.Controls.Add(this.txtQrCode);
@@ -1324,6 +1326,16 @@ namespace Sage50c.API.Sample {
             this.tabBuySaleTransaction.Size = new System.Drawing.Size(943, 481);
             this.tabBuySaleTransaction.TabIndex = 3;
             this.tabBuySaleTransaction.Text = "Compra/Venda/Stock";
+            // 
+            // CbRequestTransactionAtDocCode
+            // 
+            this.CbRequestTransactionAtDocCode.AutoSize = true;
+            this.CbRequestTransactionAtDocCode.Location = new System.Drawing.Point(651, 446);
+            this.CbRequestTransactionAtDocCode.Name = "CbRequestTransactionAtDocCode";
+            this.CbRequestTransactionAtDocCode.Size = new System.Drawing.Size(222, 19);
+            this.CbRequestTransactionAtDocCode.TabIndex = 416;
+            this.CbRequestTransactionAtDocCode.Text = "Show RequestTransactionAtDocCode";
+            this.CbRequestTransactionAtDocCode.UseVisualStyleBackColor = true;
             // 
             // label49
             // 
@@ -2156,7 +2168,7 @@ namespace Sage50c.API.Sample {
             this.pnlTransModuleSizeColor.Enabled = false;
             this.pnlTransModuleSizeColor.Location = new System.Drawing.Point(0, 31);
             this.pnlTransModuleSizeColor.Name = "pnlTransModuleSizeColor";
-            this.pnlTransModuleSizeColor.Size = new System.Drawing.Size(555, 144);
+            this.pnlTransModuleSizeColor.Size = new System.Drawing.Size(555, 142);
             this.pnlTransModuleSizeColor.TabIndex = 360;
             // 
             // btnTransClearSize1
@@ -3930,6 +3942,15 @@ namespace Sage50c.API.Sample {
             this.tabSystemUsers.Text = "System Users";
             this.tabSystemUsers.UseVisualStyleBackColor = true;
             // 
+            // systemUsers1
+            // 
+            this.systemUsers1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.systemUsers1.Location = new System.Drawing.Point(0, 0);
+            this.systemUsers1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.systemUsers1.Name = "systemUsers1";
+            this.systemUsers1.Size = new System.Drawing.Size(943, 481);
+            this.systemUsers1.TabIndex = 0;
+            // 
             // tabSystemSettings
             // 
             this.tabSystemSettings.Controls.Add(this.systemSettingsUC1);
@@ -3940,6 +3961,15 @@ namespace Sage50c.API.Sample {
             this.tabSystemSettings.Text = "System Settings";
             this.tabSystemSettings.UseVisualStyleBackColor = true;
             // 
+            // systemSettingsUC1
+            // 
+            this.systemSettingsUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.systemSettingsUC1.Location = new System.Drawing.Point(0, 0);
+            this.systemSettingsUC1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.systemSettingsUC1.Name = "systemSettingsUC1";
+            this.systemSettingsUC1.Size = new System.Drawing.Size(943, 481);
+            this.systemSettingsUC1.TabIndex = 0;
+            // 
             // tpDataManager
             // 
             this.tpDataManager.Controls.Add(this.dataManagerUC1);
@@ -3949,24 +3979,6 @@ namespace Sage50c.API.Sample {
             this.tpDataManager.TabIndex = 9;
             this.tpDataManager.Text = "Data Manager";
             this.tpDataManager.UseVisualStyleBackColor = true;
-            // 
-            // systemUsers1
-            // 
-            this.systemUsers1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.systemUsers1.Location = new System.Drawing.Point(0, 0);
-            this.systemUsers1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.systemUsers1.Name = "systemUsers1";
-            this.systemUsers1.Size = new System.Drawing.Size(943, 483);
-            this.systemUsers1.TabIndex = 0;
-            // 
-            // systemSettingsUC1
-            // 
-            this.systemSettingsUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.systemSettingsUC1.Location = new System.Drawing.Point(0, 0);
-            this.systemSettingsUC1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.systemSettingsUC1.Name = "systemSettingsUC1";
-            this.systemSettingsUC1.Size = new System.Drawing.Size(943, 483);
-            this.systemSettingsUC1.TabIndex = 0;
             // 
             // dataManagerUC1
             // 
@@ -4341,6 +4353,7 @@ namespace Sage50c.API.Sample {
         private RadioButton optPrintOptions2;
         private TabPage tpDataManager;
         private DataManagerUC dataManagerUC1;
+        private CheckBox CbRequestTransactionAtDocCode;
     }
 }
 
