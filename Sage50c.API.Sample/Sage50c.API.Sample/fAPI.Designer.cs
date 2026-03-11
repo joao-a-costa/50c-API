@@ -1920,10 +1920,12 @@ namespace Sage50c.API.Sample {
             // optPrintOptions2
             // 
             this.optPrintOptions2.AutoSize = true;
+            this.optPrintOptions2.Checked = true;
             this.optPrintOptions2.Location = new System.Drawing.Point(20, 76);
             this.optPrintOptions2.Name = "optPrintOptions2";
             this.optPrintOptions2.Size = new System.Drawing.Size(96, 19);
             this.optPrintOptions2.TabIndex = 345;
+            this.optPrintOptions2.TabStop = true;
             this.optPrintOptions2.Text = "Não imprimir";
             this.optPrintOptions2.UseVisualStyleBackColor = true;
             // 
@@ -1940,12 +1942,10 @@ namespace Sage50c.API.Sample {
             // optPrintOptions0
             // 
             this.optPrintOptions0.AutoSize = true;
-            this.optPrintOptions0.Checked = true;
             this.optPrintOptions0.Location = new System.Drawing.Point(20, 24);
             this.optPrintOptions0.Name = "optPrintOptions0";
             this.optPrintOptions0.Size = new System.Drawing.Size(71, 19);
             this.optPrintOptions0.TabIndex = 343;
-            this.optPrintOptions0.TabStop = true;
             this.optPrintOptions0.Text = "Imprimir";
             this.optPrintOptions0.UseVisualStyleBackColor = true;
             // 

@@ -1118,8 +1118,8 @@ namespace Sage50c.API.Sample {
             txtTransDocNumber.Text = "0";
             txtTransGlobalDiscount.Text = "0";
             txtTransPartyId.Text = string.Empty;
-            txtPaymentID.Text = "0";
-            txtTenderID.Text = "0";
+            txtPaymentID.Text = APIEngine.DSOCache.PaymentProvider.GetFirstID().ToString();
+            txtTenderID.Text = APIEngine.DSOCache.TenderProvider.GetFirstID().ToString();
             //
             // Obter a primeira série EXTERNA
             var externalSeries = systemSettings.DocumentSeries
@@ -1282,7 +1282,7 @@ namespace Sage50c.API.Sample {
                 throw new Exception("Carregue uma transação antes de fazer alterações.");
             }
             else {
-                _itemTransactionController.SetPartyID(txtTransPartyId.Text.ToShort());
+                _itemTransactionController.SetPartyID(txtTransPartyId.Text.ToDouble());
                 _itemTransactionController.Transaction.TransDocument = txtTransDoc.Text.ToUpper();
                 if (fillTransDocNumber)
                     _itemTransactionController.Transaction.TransDocNumber = txtTransDocNumber.Text.ToDouble();
