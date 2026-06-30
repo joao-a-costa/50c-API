@@ -308,6 +308,7 @@ namespace Sage50c.API.Sample {
             this.LerPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.FinalizarPreparacao = new System.Windows.Forms.ToolTip(this.components);
             this.GuardarPreparacao = new System.Windows.Forms.ToolTip(this.components);
+            this.RbPrintReceipt = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCSharp)).BeginInit();
             this.panel5.SuspendLayout();
@@ -788,11 +789,12 @@ namespace Sage50c.API.Sample {
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.RbPrintReceipt);
             this.groupBox2.Controls.Add(this.chkAccoutTransPrintPreview);
             this.groupBox2.Controls.Add(this.btnAccoutTransPrint);
-            this.groupBox2.Location = new System.Drawing.Point(731, 38);
+            this.groupBox2.Location = new System.Drawing.Point(677, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(138, 105);
+            this.groupBox2.Size = new System.Drawing.Size(144, 182);
             this.groupBox2.TabIndex = 342;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Impressão";
@@ -813,7 +815,7 @@ namespace Sage50c.API.Sample {
             // btnAccoutTransPrint
             // 
             this.btnAccoutTransPrint.Enabled = false;
-            this.btnAccoutTransPrint.Location = new System.Drawing.Point(19, 57);
+            this.btnAccoutTransPrint.Location = new System.Drawing.Point(15, 79);
             this.btnAccoutTransPrint.Name = "btnAccoutTransPrint";
             this.btnAccoutTransPrint.Size = new System.Drawing.Size(92, 27);
             this.btnAccoutTransPrint.TabIndex = 341;
@@ -3989,6 +3991,16 @@ namespace Sage50c.API.Sample {
             this.dataManagerUC1.Size = new System.Drawing.Size(943, 481);
             this.dataManagerUC1.TabIndex = 0;
             // 
+            // RbPrintReceipt
+            // 
+            this.RbPrintReceipt.AutoSize = true;
+            this.RbPrintReceipt.Location = new System.Drawing.Point(15, 54);
+            this.RbPrintReceipt.Name = "RbPrintReceipt";
+            this.RbPrintReceipt.Size = new System.Drawing.Size(118, 19);
+            this.RbPrintReceipt.TabIndex = 345;
+            this.RbPrintReceipt.Text = "Exportar para PDF";
+            this.RbPrintReceipt.UseVisualStyleBackColor = true;
+            // 
             // fApi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -4354,6 +4366,7 @@ namespace Sage50c.API.Sample {
         private TabPage tpDataManager;
         private DataManagerUC dataManagerUC1;
         private CheckBox CbRequestTransactionAtDocCode;
+        private RadioButton RbPrintReceipt;
     }
 }
 

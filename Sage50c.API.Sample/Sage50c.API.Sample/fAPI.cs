@@ -1706,11 +1706,72 @@ namespace Sage50c.API.Sample {
         /// <summary>
         /// Creates a new account transaction
         /// </summary>
-        private TransactionID AccountTransactionInsert() {
+        private TransactionID AccountTransactionInsert()
+        {
 
             AccountTransFill(true);
             var transactionID = _accountTransactionController.Save();
             return transactionID;
+        }
+
+        private void AccountTransactionPrint(string transDocument, string transSerial, double transDocNumber)
+        {
+
+            //AccountTransFill(true);
+            //var transactionID = _accountTransactionController.Save();
+
+            clsLArrayObject objListPrintSettings;
+            PrintSettings oPrintSettings = null;
+            Document oDocument = null;
+            PlaceHolders oPlaceHolders = new PlaceHolders();
+
+            btnPrint.Enabled = false;
+
+            oPlaceHolders = new PlaceHolders();
+
+            try
+            {
+                oDocument = systemSettings.WorkstationInfo.Document[transDocument];
+
+                // Preencher as opções default
+                var defaultPrintSettings = new PrintSettings()
+                {
+                    AskForPrinter = false,
+                    UseIssuingOutput = false,
+                    PrintAction = chkPrintPreview.Checked ? PrintActionEnum.prnActPreview : PrintActionEnum.prnActPrint
+                };
+
+                defaultPrintSettings.PrintAction = PrintActionEnum.prnActExportToFile;
+                defaultPrintSettings.ExportFileType = ExportFileTypeEnum.filePDF;
+                defaultPrintSettings.ExportFileFolder = oPlaceHolders.GetPlaceHolderPath(systemSettings.WorkstationInfo.PDFDestinationFolder);
+
+
+                //Obter configurações de impressão na configuração de postos
+                objListPrintSettings = printingManager.GetTransactionPrintSettings(oDocument, transSerial, ref defaultPrintSettings);
+                //
+                if (objListPrintSettings.getCount() > 0)
+                {
+                    // Neste exemplo, vamos escolher a primeira configuração
+                    // Se houverem mais configuradas, deve-se alterar para a pretendida
+                    oPrintSettings = (PrintSettings)objListPrintSettings.item[0];
+                    // Imprimir...
+                    bsoItemTransaction.UserPermissions = systemSettings.User;
+                    bsoItemTransaction.PermissionsType = FrontOfficePermissionEnum.foPermByUser;
+
+                    bsoItemTransaction.PrintTransaction(transSerial, transDocument, transDocNumber, PrintJobEnum.jobPrint, 1, oPrintSettings);
+                }
+                APIEngine.CoreGlobals.MsgBoxFrontOffice("Concluido.", VBA.VbMsgBoxStyle.vbInformation, Application.ProductName);
+            }
+            catch (Exception ex)
+            {
+                APIEngine.CoreGlobals.MsgBoxFrontOffice(ex.Message, VBA.VbMsgBoxStyle.vbExclamation, Application.ProductName);
+            }
+            finally
+            {
+                btnPrint.Enabled = true;
+                oDocument = null;
+                oPlaceHolders = null;
+            }
         }
 
         /// <summary>
@@ -2237,12 +2298,19 @@ namespace Sage50c.API.Sample {
                 // Carregar o documento
                 AccountTransactionGet();
 
-                // Pré-visualizar ou Imprimir
-                if (chkAccoutTransPrintPreview.Checked) {
-                    accountTransManager.ExecuteFunction("PREVIEW", string.Empty);
-                }
-                else {
-                    accountTransManager.ExecuteFunction("PRINT", string.Empty);
+                if (RbPrintReceipt.Checked)
+                    AccountTransactionPrint(txtAccountTransDoc.Text, txtAccountTransSerial.Text, double.Parse(txtAccountTransDocNumber.Text));
+                else
+                {
+                    // Pré-visualizar ou Imprimir
+                    if (chkAccoutTransPrintPreview.Checked)
+                    {
+                        accountTransManager.ExecuteFunction("PREVIEW", string.Empty);
+                    }
+                    else
+                    {
+                        accountTransManager.ExecuteFunction("PRINT", string.Empty);
+                    }
                 }
             }
             catch (Exception ex) {
