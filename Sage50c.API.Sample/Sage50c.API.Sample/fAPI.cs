@@ -456,12 +456,12 @@ namespace Sage50c.API.Sample {
                 // Mostrar no ecran
                 TransactionGet(false);
                 //
-                if (optPrintOptions0.Checked) {
+                if (optPrintOptions0.Checked && string.IsNullOrWhiteSpace(txtPrintLayoutFile.Text)) {
                     //Imprimir com as regras default da 50c e caixa de diálogo
                     TransactionPrint(txtTransSerial.Text, txtTransDoc.Text, transDocNumber, chkPrintPreview.Checked);
                 }
                 else {
-                    // Impressão customizada, exportação para PDF, ...
+                    // Impressão customizada (com layout), exportação para PDF, ...
                     TransactionPrintWithConfig(txtTransSerial.Text, txtTransDoc.Text, transDocNumber);
                 }
             }
@@ -1250,12 +1250,25 @@ namespace Sage50c.API.Sample {
                     // Neste exemplo, vamos escolher a primeira configuração
                     // Se houverem mais configuradas, deve-se alterar para a pretendida
                     oPrintSettings = (PrintSettings)objListPrintSettings.item[0];
+
+                    // Layout de impressão (opcional). Ex: Talao Sage(1).TPL
+                    // Vazio = layout por defeito do documento
+                    var printLayoutFile = txtPrintLayoutFile.Text.Trim();
+                    if (!string.IsNullOrEmpty(printLayoutFile)) {
+                        oPrintSettings.PrintLayoutFile = printLayoutFile;
+                    }
+
                     // Imprimir...
                     bsoItemTransaction.UserPermissions = systemSettings.User;
                     bsoItemTransaction.PermissionsType = FrontOfficePermissionEnum.foPermByUser;
 
                     if (chkPrintPreview.Checked) {
-                        bsoItemTransaction.PrintTransaction(transSerial, transDoc, transDocNumber, PrintJobEnum.jobPreview, 1);
+                        if (string.IsNullOrEmpty(printLayoutFile)) {
+                            bsoItemTransaction.PrintTransaction(transSerial, transDoc, transDocNumber, PrintJobEnum.jobPreview, 1);
+                        }
+                        else {
+                            bsoItemTransaction.PrintTransaction(transSerial, transDoc, transDocNumber, PrintJobEnum.jobPreview, 1, oPrintSettings);
+                        }
                     }
                     else {
                         bsoItemTransaction.PrintTransaction(transSerial, transDoc, transDocNumber, PrintJobEnum.jobPrint, 1, oPrintSettings);
