@@ -143,6 +143,8 @@ namespace Sage50c.API.Sample {
             this.btnTransSavePrep = new System.Windows.Forms.Button();
             this.btnTransGetPrep = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblPrintLayoutFile = new System.Windows.Forms.Label();
+            this.txtPrintLayoutFile = new System.Windows.Forms.TextBox();
             this.optPrintOptions2 = new System.Windows.Forms.RadioButton();
             this.optPrintOptions1 = new System.Windows.Forms.RadioButton();
             this.optPrintOptions0 = new System.Windows.Forms.RadioButton();
@@ -1907,6 +1909,8 @@ namespace Sage50c.API.Sample {
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblPrintLayoutFile);
+            this.groupBox1.Controls.Add(this.txtPrintLayoutFile);
             this.groupBox1.Controls.Add(this.optPrintOptions2);
             this.groupBox1.Controls.Add(this.optPrintOptions1);
             this.groupBox1.Controls.Add(this.optPrintOptions0);
@@ -1918,7 +1922,23 @@ namespace Sage50c.API.Sample {
             this.groupBox1.TabIndex = 341;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Impressão";
-            // 
+            //
+            // lblPrintLayoutFile
+            //
+            this.lblPrintLayoutFile.AutoSize = true;
+            this.lblPrintLayoutFile.Location = new System.Drawing.Point(17, 103);
+            this.lblPrintLayoutFile.Name = "lblPrintLayoutFile";
+            this.lblPrintLayoutFile.Size = new System.Drawing.Size(46, 15);
+            this.lblPrintLayoutFile.TabIndex = 347;
+            this.lblPrintLayoutFile.Text = "Layout:";
+            //
+            // txtPrintLayoutFile
+            //
+            this.txtPrintLayoutFile.Location = new System.Drawing.Point(68, 99);
+            this.txtPrintLayoutFile.Name = "txtPrintLayoutFile";
+            this.txtPrintLayoutFile.Size = new System.Drawing.Size(156, 23);
+            this.txtPrintLayoutFile.TabIndex = 346;
+            //
             // optPrintOptions2
             // 
             this.optPrintOptions2.AutoSize = true;
@@ -4189,6 +4209,8 @@ namespace Sage50c.API.Sample {
         private System.Windows.Forms.RadioButton optPrintOptions1;
         private System.Windows.Forms.RadioButton optPrintOptions0;
         private System.Windows.Forms.CheckBox chkPrintPreview;
+        private System.Windows.Forms.Label lblPrintLayoutFile;
+        private System.Windows.Forms.TextBox txtPrintLayoutFile;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.RadioButton rbTransStock;
         private System.Windows.Forms.RadioButton rbTransBuySell;
